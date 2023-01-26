@@ -1,0 +1,54 @@
+POST http://localhost:4000/item
+Content-Type: application/json
+
+[
+  {
+    "name": "Flexi Dumbell",
+    "imgUrl": "imgs/flexidumbell.webp",
+    "price": 560
+  },
+  {
+    "name": "Flexi Bike",
+    "imgUrl": "imgs/BikeMain_1260x.webp",
+    "price": 960.54
+  },
+  {
+    "name": "Flexi Kettle",
+    "imgUrl": "imgs/flexiKettle.webp",
+    "price": 240
+  },
+  {
+    "name": "Treadmill",
+    "imgUrl": "imgs/flextread_img00_1260x.webp",
+    "price": 3000
+  }
+]
+
+###
+GET http://localhost:4000/item
+
+###
+DELETE  http://localhost:4000/item
+
+###
+POST http://localhost:4000/order
+Content-Type: application/json
+
+{
+  "email": "prash@gmail.com",
+  "name": "prash",
+  "shipping": "address",
+  "orders": [{
+    "_id": "63d0a3b5eab84083acec2c8e",
+    "quantity": 2,
+    "amount": 100
+  },
+  {
+    "_id": "63d0a3b5eab84083acec2c91",
+    "quantity": 2,
+    "amount": 200
+  }]
+}
+
+###
+GET http://localhost:4000/order
