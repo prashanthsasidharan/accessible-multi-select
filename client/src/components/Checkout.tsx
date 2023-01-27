@@ -19,7 +19,24 @@ function Checkout() {
   useEffect(() => {
     fetch(BASE_URL + "/order", {
       method: "POST",
-      body: JSON.stringify({}),
+      body: JSON.stringify({
+        "email": "prash@gmail.com",
+        "name": "prash",
+        "shipping": "address",
+        "orders": [{
+          "_id": "63d0a3b5eab84083acec2c8e",
+          "quantity": 2,
+          "amount": 100
+        },
+        {
+          "_id": "63d0a3b5eab84083acec2c91",
+          "quantity": 2,
+          "amount": 200
+        }]
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      }
     }).then(async (result) => {
       var { clientSecret } = await result.json();
       setClientSecret(clientSecret);
@@ -28,7 +45,6 @@ function Checkout() {
 
   return (
     <>
-      <h1>React Stripe and the Payment Element</h1>
       {clientSecret && stripePromise && (
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <CheckoutForm />

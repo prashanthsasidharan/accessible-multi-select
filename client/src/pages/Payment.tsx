@@ -2,29 +2,31 @@ import Accordion from 'react-bootstrap/Accordion';
 import { useAccordionButton } from 'react-bootstrap/AccordionButton';
 import Card from 'react-bootstrap/Card';
 import { AccordionContext, Button, InputGroup, Row } from 'react-bootstrap';
-import { ReactNode, useContext } from 'react';
+import { FormEvent, ReactNode, useContext, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Checkout from '../components/Checkout';
 
 type CustomToggleType = {
   children: ReactNode,
   eventKey: string,
-  hideToggle?: Boolean
+  hideToggle?: Boolean,
+  canContinue?: (e: FormEvent) => void
 }
 
-function CustomToggle({ children, eventKey, hideToggle=true } : CustomToggleType) {
+function CustomToggle({ children, eventKey, hideToggle=true, canContinue } : CustomToggleType) {
   const { activeEventKey } = useContext(AccordionContext);
 
-  const decoratedOnClick = useAccordionButton(eventKey, () =>
-    console.log()
-  );
+  const proceed = useAccordionButton(eventKey);
 
+  let hideButton = (hideToggle && eventKey >= activeEventKey) || (activeEventKey === '3');
   return (
     <button
       type="button"
       style={{ backgroundColor: 'pink',  }}
-      className={`${(hideToggle && eventKey >= activeEventKey) && 'd-none' }`}
-      onClick={decoratedOnClick}
+      className={`${hideButton && 'd-none' }`}
+      onClick={(e) => {
+        canContinue(e) &&  proceed(e);
+      }}
     >
       {children}
     </button>
@@ -35,9 +37,23 @@ function handleChange() {
 
 }
 
+function CustomBody({ children, eventKey }) {
+  const { activeEventKey } = useContext(AccordionContext);
+  return (eventKey === activeEventKey && children);
+}
+
 export default function Payment() {
+  const [validatedLogin, setValidatedLogin] = useState(false);
+  const [validatedAddress, setValidatedAddress] = useState(false);
+
+  const handleContinue = (event, validator) => {
+    const form = event.currentTarget.form;
+    validator(true);
+    return form.checkValidity();
+  };
+
   return (
-    <Accordion defaultActiveKey="3">
+    <Accordion defaultActiveKey="0">
       <Card>
         <Card.Header className='d-flex justify-content-between'>
           <div>
@@ -48,22 +64,31 @@ export default function Payment() {
         <Accordion.Collapse eventKey="0">
           <>
             <Card.Body>
-              <Form>
+              <Form noValidate validated={validatedLogin}>
                 <Form.Group className="mb-3" controlId="formBasicName">
                   <Form.Label>Name</Form.Label>
-                  <Form.Control type="name" placeholder="Enter name" />
+                  <Form.Control type="text" required placeholder="Enter name" />
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
+                  <Form.Control.Feedback type="invalid">
+                    Please choose a username.
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Email address</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Control type="email" required placeholder="Enter email" />
                   <Form.Text className="text-muted">
                     We'll never share your email with anyone else 😉
                   </Form.Text>
+                  <Form.Control.Feedback type="invalid">
+                    Please enter a valid email.
+                  </Form.Control.Feedback>
+                  <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
+
+                <CustomToggle eventKey="1" hideToggle={false} canContinue={(e) => handleContinue(e, setValidatedLogin)}>Continue</CustomToggle>
               </Form>
             </Card.Body>
-            <CustomToggle eventKey="1" hideToggle={false}>Continue</CustomToggle>
           </>
         </Accordion.Collapse>
       </Card>
@@ -162,15 +187,13 @@ export default function Payment() {
           <div>
             Payment
           </div>
-          <CustomToggle eventKey="3">Change</CustomToggle>
         </Card.Header>
         <Accordion.Collapse eventKey="3">
-          <>
-            <Card.Body>
+          <Card.Body>
+            <CustomBody eventKey="3">
               <Checkout />
-            </Card.Body>
-            <Button>Pay</Button>
-          </>
+            </CustomBody>
+          </Card.Body>
         </Accordion.Collapse>
       </Card>
     </Accordion>
