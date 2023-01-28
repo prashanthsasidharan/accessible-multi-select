@@ -3,7 +3,7 @@ import { StoreItem } from "../components/StoreItem"
 import { useStoreItems } from "../context/StoreItemsContext"
 
 export function Home() {
-  const storeItems = useStoreItems();
+  const { storeItems } = useStoreItems();
 
   return (
     <>

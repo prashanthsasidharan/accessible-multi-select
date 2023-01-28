@@ -1,8 +1,9 @@
-import { Button, Offcanvas, Stack } from "react-bootstrap"
+import { Button, Card, Offcanvas, Stack } from "react-bootstrap"
 import { useShoppingCart } from "../context/ShoppingCartContext"
 import { formatCurrency } from "../utilities/formatCurrency"
 import { CartItem } from "./CartItem"
 import { useStoreItems } from "../context/StoreItemsContext"
+import { Navigate, useNavigate } from "react-router-dom"
 
 type ShoppingCartProps = {
   isOpen: boolean
@@ -10,7 +11,18 @@ type ShoppingCartProps = {
 
 export function ShoppingCart({ isOpen }: ShoppingCartProps) {
   const { closeCart, cartItems } = useShoppingCart();
-  const storeItems = useStoreItems();
+  const { getStoreItem } = useStoreItems();
+  const navigate = useNavigate();
+
+  const goToPayment = () => {
+    navigate({
+      pathname: '/payment',
+      search: '?isFromCart=true',
+    });
+
+    closeCart();
+  }
+  
 
   return (
     <Offcanvas show={isOpen} onHide={closeCart} placement="end">
@@ -20,7 +32,7 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
       <Offcanvas.Body>
         <Stack gap={3}>
           {cartItems.map(item => (
-            <CartItem key={item.id} {...item} />
+            <CartItem key={item._id} {...item} />
           ))}
     
           <div className="row justify-content-between align-items-center">
@@ -28,14 +40,14 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
               Total{" "}
               {formatCurrency(
                 cartItems.reduce((total, cartItem) => {
-                  const item = storeItems.find(i => i._id === cartItem.id)
-                  return total + (item?.price || 0) * cartItem.quantity
+                  const item = getStoreItem(cartItem.id);
+                  return total + (item?.amount || 0) * cartItem.quantity
                 }, 0)
               )}
             </div>
 
             {!!cartItems.length && (
-                <Button className="col-4">
+                <Button className="col-4" onClick={goToPayment}>
                   + Buy Now
                 </Button>
             )}

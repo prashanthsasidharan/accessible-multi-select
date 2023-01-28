@@ -7,11 +7,14 @@ import { BASE_URL } from "../constants";
 type StoreItemType = {
   name: string,
   imgUrl: string,
-  price: number,
+  amount: number,
   _id: number
 }
 
-type StoreItemValueType = StoreItemType[];
+type StoreItemValueType = {
+  storeItems: StoreItemType[],
+  getStoreItem: (id: number | string | null) => StoreItemType | null;
+};
 
 const ItemsContext = createContext<StoreItemValueType | null>(null);
 export function useStoreItems() {
@@ -22,6 +25,10 @@ export function StoreItemsContext({children} : { children: ReactNode }) {
   let [isFetchingStoreItems, setIsFetchingStoreItems] = useState<Boolean>(false);
   let [storeItems, setStoreItems] = useState<StoreItemType[]>([]);
   let notify = useNotifyContext();
+
+  function getStoreItem(id) {
+   return storeItems.find(item => item._id === id) || null
+  }
 
   useEffect(() => {
     async function getStoreItems() {
@@ -43,7 +50,7 @@ export function StoreItemsContext({children} : { children: ReactNode }) {
         <span className="visually-hidden">Loading...</span>
       </Spinner>
     ) : (
-      <ItemsContext.Provider value={storeItems}>
+      <ItemsContext.Provider value={{storeItems, getStoreItem}}>
         {children}
       </ItemsContext.Provider>
     )

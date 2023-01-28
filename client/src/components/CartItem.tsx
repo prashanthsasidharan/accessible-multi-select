@@ -4,14 +4,14 @@ import { formatCurrency } from "../utilities/formatCurrency"
 import { useStoreItems } from "../context/StoreItemsContext"
 
 type CartItemProps = {
-  id: number
+  _id: number
   quantity: number
 }
 
-export function CartItem({ id, quantity }: CartItemProps) {
+export function CartItem({ _id, quantity }: CartItemProps) {
   const { removeFromCart } = useShoppingCart();
-  const storeItems = useStoreItems();
-  const item = storeItems.find(i => i._id === id)
+  const { getStoreItem } = useStoreItems();
+  const item = getStoreItem(_id);
   if (item == null) return null
 
   return (
@@ -30,10 +30,10 @@ export function CartItem({ id, quantity }: CartItemProps) {
           )}
         </div>
         <div className="text-muted" style={{ fontSize: ".75rem" }}>
-          {formatCurrency(item.price)}
+          {formatCurrency(item.amount)}
         </div>
       </div>
-      <div> {formatCurrency(item.price * quantity)}</div>
+      <div> {formatCurrency(item.amount * quantity)}</div>
       <Button
         variant="outline-danger"
         size="sm"
