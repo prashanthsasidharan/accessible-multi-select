@@ -40,7 +40,7 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
               Total{" "}
               {formatCurrency(
                 cartItems.reduce((total, cartItem) => {
-                  const item = getStoreItem(cartItem.id);
+                  const item = getStoreItem(cartItem._id);
                   return total + (item?.amount || 0) * cartItem.quantity
                 }, 0)
               )}

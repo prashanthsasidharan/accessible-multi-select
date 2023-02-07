@@ -18,7 +18,6 @@ function CustomToggle({ children, eventKey, hideToggle=true, canContinue } : Cus
   return (
     <button
       type="submit"
-      style={{ backgroundColor: 'pink',  }}
       className={`${hideButton && 'd-none' }`}
       onClick={(e) => {
         if (typeof canContinue  === 'function') {

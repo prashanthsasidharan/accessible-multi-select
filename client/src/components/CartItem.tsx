@@ -33,7 +33,7 @@ export function CartItem({ _id, quantity }: CartItemProps) {
           {formatCurrency(item.amount)}
         </div>
       </div>
-      <div> {formatCurrency(item.amount * quantity)}</div>
+      <div style={{ fontSize: ".65rem" }}> {formatCurrency(item.amount * quantity)}</div>
       <Button
         variant="outline-danger"
         size="sm"

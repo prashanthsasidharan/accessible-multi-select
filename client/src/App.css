@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway&display=swap");
-
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600&display=swap');
 :root {
   --light-grey: #f6f9fc;
   --dark-terminal-color: #0a2540;
@@ -8,7 +7,7 @@
 }
 
 body {
-  font-family: "Raleway";
+  font-family: 'Nunito', sans-serif;
   font-size: 1.2em;
   color: var(--dark-terminal-color);
 }
