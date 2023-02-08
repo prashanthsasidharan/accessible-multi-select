@@ -28,21 +28,21 @@ export default function LoginCollapse({ paymentDetails, updatePaymentDetails }) 
           <Form noValidate validated={validatedLogin} onSubmit={onFormContinue}>
             <Form.Group className="mb-3" controlId="formBasicName">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="text" required placeholder="Enter name" name="name"  defaultValue={paymentDetails.name} />
+              <Form.Control type="text" required placeholder="Enter name" name="name"  defaultValue={paymentDetails.name} data-field="name"/>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               <Form.Control.Feedback type="invalid">
-                Please enter a username.
+                Please enter a username or click the filler to prefill data.
               </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" required placeholder="Enter email" name="email" defaultValue={paymentDetails.email} />
+              <Form.Control type="email" required placeholder="Enter email" name="email" defaultValue={paymentDetails.email} data-field="email" />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else 😉
               </Form.Text>
               <Form.Control.Feedback type="invalid">
-                Please enter a valid email.
+                Please enter a valid email or click the filler to prefill data.
               </Form.Control.Feedback>
               <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
             </Form.Group>

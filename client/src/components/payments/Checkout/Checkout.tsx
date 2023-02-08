@@ -19,7 +19,7 @@ export default function CheckoutWrapper({ paymentDetails }) {
   let { cartItems, clearItemsFromCart } = useShoppingCart();
 
   useEffect(() => {
-    fetch(BASE_URL + "/config").then(async (r) => {
+    fetch(BASE_URL + "config").then(async (r) => {
       const { publishableKey } = await r.json();
       setStripePromise(loadStripe(publishableKey));
     });
@@ -50,7 +50,7 @@ export default function CheckoutWrapper({ paymentDetails }) {
     console.log(data);
     
 
-    fetch(BASE_URL + "/order", {
+    fetch(BASE_URL + "order", {
       method: "POST",
       body: JSON.stringify(data),
       headers: {

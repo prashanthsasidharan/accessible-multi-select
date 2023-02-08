@@ -74,37 +74,51 @@ router.post("/", async (req, res) => {
 });
 
 router.get("/" ,async (req, res) => {
-  const { data: paymentIntents } = await stripe.paymentIntents.list({
-    limit: 3,
-  });
+  try {
+    const { data: paymentIntents } = await stripe.paymentIntents.list({
+      limit: 3,
+    });
 
-  let response = await Promise.all(paymentIntents.map(async (pI) => {
-   let orders = await Order.find({pid: pI.id});
-   let [commonOrderDetails] = orders;
-   let { name, email, pid } = commonOrderDetails;
-   let items = await Promise.all(orders.map(async (orderItem) => {
+    let response = await Promise.all(paymentIntents.map(async (pI) => {
+    let orders = await Order.find({pid: pI.id});
+    let [commonOrderDetails] = orders;
+    let { name, email, pid } = commonOrderDetails;
+    let items = await Promise.all(orders.map(async (orderItem) => {
 
-    // quanity is not added to the items array as mongodb querys returns monogdb objects
-    // So to get plain ojject used lean method
-    // ref: https://stackoverflow.com/a/28157658/15962802
-    let item = await Item.findOne({_id: orderItem.itemId}).lean();
-    item.quantity = orderItem.quantity;
-    return item; 
+      // quanity is not added to the items array as mongodb querys returns monogdb objects
+      // So to get plain object used lean method
+      // ref: https://stackoverflow.com/a/28157658/15962802
+      console.log(orderItem)
+      let item = await Item.findOne({_id: orderItem.itemId}).lean();
+      item.quantity = orderItem.quantity;
+      return item; 
+      }));
+
+    return {
+      pid,
+      name,
+      email,
+      date: (new Date(pI.created * 1000)).toLocaleString(),
+      total: pI.amount,
+      status: formatStatus(pI.status),
+      formatted_status: formatStatusText(pI.status),
+      items
+    }
     }));
+    return res.status(200).json(response)
+  } catch(e) {
+    return res.status(400).send({
+      error: {
+        message: e.message,
+      },
+    });
+  }
 
-   return {
-    pid,
-    name,
-    email,
-    date: (new Date(pI.created * 1000)).toLocaleString(),
-    total: pI.amount,
-    status: formatStatus(pI.status),
-    formatted_status: formatStatusText(pI.status),
-    items
-   }
-  }));
+});
 
-  return res.status(200).json(response)
+router.delete("/" ,async (req, res) => {
+  await Order.deleteMany({});
+  return res.status(201).json({message: "Successfully deleted orders"});
 });
 
 module.exports = router

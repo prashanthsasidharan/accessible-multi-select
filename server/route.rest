@@ -1,37 +1,67 @@
-POST http://localhost:4000/item
+POST http://localhost:3000/item
 Content-Type: application/json
 
 [
   {
     "name": "Flexi Dumbell",
-    "imgUrl": "imgs/flexidumbell.webp",
+    "imgUrl": "http://localhost:3001/imgs/flexidumbell.webp",
     "amount": 560
   },
   {
     "name": "Flexi Bike",
-    "imgUrl": "imgs/BikeMain_1260x.webp",
+    "imgUrl": "http://localhost:3001/imgs/BikeMain_1260x.webp",
     "amount": 960
   },
   {
     "name": "Flexi Kettle",
-    "imgUrl": "imgs/flexiKettle.webp",
+    "imgUrl": "http://localhost:3001/imgs/flexiKettle.webp",
     "amount": 240
   },
   {
     "name": "Treadmill",
-    "imgUrl": "imgs/flextread_img00_1260x.webp",
+    "imgUrl": "http://localhost:3001/imgs/flextread_img00_1260x.webp",
     "amount": 3000
+  },
+  {
+    "name": "Gym Benches",
+    "imgUrl": "http://localhost:3001/imgs/gym-benches.png",
+    "amount": 1200
+  },
+  {
+    "name": "Smith and Squats",
+    "imgUrl": "http://localhost:3001/imgs/smith-squat.png",
+    "amount": 1270
+  },
+  {
+    "name": "Functional Trainer",
+    "imgUrl": "http://localhost:3001/imgs/functional-trainer.png",
+    "amount": 2300
+  },
+  {
+    "name": "Hammer Series",
+    "imgUrl": "http://localhost:3001/imgs/hammer-series.png",
+    "amount": 1500
+  },
+  {
+    "name": "Strength Gym Equipment",
+    "imgUrl": "http://localhost:3001/imgs/strength-gym-equipment.png",
+    "amount": 1270
+  },
+  {
+    "name": "Gym Accessories",
+    "imgUrl": "http://localhost:3001/imgs/gym-accessories.png",
+    "amount": 250
   }
 ]
 
 ###
-GET http://localhost:4000/item
+GET http://localhost:3000/item
 
 ###
-DELETE  http://localhost:4000/item
+DELETE  http://localhost:3000/item
 
 ###
-POST http://localhost:4000/order
+POST http://localhost:3000/order
 Content-Type: application/json
 
 {
@@ -39,14 +69,18 @@ Content-Type: application/json
   "email": "prash@gmail.com",
   "shipping": "address",
   "orders": [{
-    "_id": "63d50d0f525044993117f991",
+    "_id": "63e25f80dea4e4f9cc87032a",
     "quantity": 2
   },
   {
-    "_id": "63d50d0f525044993117f992",
+    "_id": "63e25f80dea4e4f9cc87032b",
     "quantity": 2
   }]
 }
 
 ###
-GET http://localhost:4000/order
+GET http://localhost:3000/order
+
+###
+
+DELETE  http://localhost:3000/order

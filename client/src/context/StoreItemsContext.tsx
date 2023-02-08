@@ -34,7 +34,7 @@ export function StoreItemsContext({children} : { children: ReactNode }) {
     async function getStoreItems() {
       try {
         setIsFetchingStoreItems(true);
-        let res = await fetch(`${BASE_URL}/item`);
+        let res = await fetch(`${BASE_URL}item`);
         let data = await res.json();
         setStoreItems(data)
         setIsFetchingStoreItems(false);

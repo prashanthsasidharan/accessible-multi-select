@@ -1,37 +1,44 @@
 import { useEffect, useState } from "react"
 import { Stack } from "react-bootstrap"
-import { useShoppingCart } from "../context/ShoppingCartContext"
-import { useStoreItems } from "../context/StoreItemsContext"
 import { formatCurrency } from "../utilities/formatCurrency"
 import { BASE_URL, STATUS_BG } from "../constants"
 import Badge from 'react-bootstrap/Badge';
+import Spinner from 'react-bootstrap/Spinner';
 
 export function Order() {
-  const { cartItems } = useShoppingCart()
-  const { getStoreItem } = useStoreItems();
+  let [isFetchingOrders, setIsFetchingOrders] = useState<Boolean>(false);
   const [orders, setOrders] = useState([]);
   useEffect(() => {
-    fetch(`${BASE_URL}/order`)
+    setIsFetchingOrders(true);
+    fetch(`${BASE_URL}order`)
       .then((res) => res.json())
-      .then((data) => setOrders(data));
+      .then((data) => {
+        setIsFetchingOrders(false);
+        setOrders(data)
+      });
   }, [])
 
   return (
+    isFetchingOrders ? (
+      <Spinner animation="border" role="status" style={{marginLeft: '50%'}}>
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    ) : (
     orders
       .map((order) => (
         <Stack gap={2} className="rounded bg-white mb-3 border">
-          <header className="bg-primary rounded-top w-100 text-white d-flex justify-content-between p-2">
+          <header className="bg-primary rounded-top w-100 text-white d-flex justify-content-around p-2">
             <div className="d-flex flex-column text-center">
-              <span>Total Amount</span>
-              <span>{formatCurrency(order.total)}</span>
+              <span>Status</span>
+              <Badge bg={STATUS_BG[order.status]}>{order.formatted_status}</Badge>
             </div>
             <div className="d-flex flex-column text-center">
               <span>Date</span>
               <span>{order.date}</span>
             </div>
             <div className="d-flex flex-column text-center">
-              <span>Status</span>
-              <Badge bg={STATUS_BG[order.status]}>{order.formatted_status}</Badge>
+              <span>Total Amount</span>
+              <span>{formatCurrency(order.total)}</span>
             </div>
           </header>
           {order.items.map((item) => (
@@ -57,5 +64,5 @@ export function Order() {
           ))}
         </Stack>
       ))
-  )
+  ))
 }

@@ -1,14 +1,14 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-import { StripeError } from "@stripe/stripe-js";
+import { useNavigate } from 'react-router-dom';
 import { useState } from "react";
-
+import { useNotifyContext } from "../../../context/Notify";
 
 export default function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
-
-  const [message, setMessage] = useState<string | undefined>(undefined);
+  let notify = useNotifyContext();
+  const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const handleSubmit = async (e : React.SyntheticEvent) => {
@@ -16,27 +16,23 @@ export default function CheckoutForm() {
 
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
-      // Make sure to disable form submission until Stripe.js has loaded.
       return;
     }
 
     setIsProcessing(true);
 
-    const { error } : {error: StripeError }  = await stripe.confirmPayment({
+    await stripe.confirmPayment({
       elements,
       confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: `${window.location.origin}/orders`,
+        return_url: `${window.location.origin}/#/orders`,
       },
+      redirect: 'if_required'
     });
 
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
-    } else {
-      setMessage("An unexpected error occured.");
-    }
-
+    
+    notify({ type: 'success', msg: 'Order successfully initiated'});
     setIsProcessing(false);
+    navigate('/orders');
   };
 
   return (
@@ -47,8 +43,6 @@ export default function CheckoutForm() {
           {isProcessing ? "Processing ... " : "Pay now"}
         </span>
       </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
     </form>
   )
 }
