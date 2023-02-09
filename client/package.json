@@ -3,8 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
-    "build": "tsc && vite build",
+    "start": "vite --host 3001",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {

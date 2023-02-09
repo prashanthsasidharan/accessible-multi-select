@@ -27,7 +27,7 @@ export function Order() {
     orders
       .map((order) => (
         <Stack gap={2} className="rounded bg-white mb-3 border">
-          <header className="bg-primary rounded-top w-100 text-white d-flex justify-content-around p-2">
+          <header className="bg-primary rounded-top w-100 text-white d-flex justify-content-between p-4 px-5">
             <div className="d-flex flex-column text-center">
               <span>Status</span>
               <Badge bg={STATUS_BG[order.status]}>{order.formatted_status}</Badge>
