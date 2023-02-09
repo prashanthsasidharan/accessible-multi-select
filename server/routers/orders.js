@@ -76,7 +76,7 @@ router.post("/", async (req, res) => {
 router.get("/" ,async (req, res) => {
   try {
     const { data: paymentIntents } = await stripe.paymentIntents.list({
-      limit: 3,
+      limit: 6,
     });
 
     let response = await Promise.all(paymentIntents.map(async (pI) => {
