@@ -4,52 +4,52 @@ Content-Type: application/json
 [
   {
     "name": "Flexi Dumbell",
-    "imgUrl": "http://localhost:3001/imgs/flexidumbell.webp",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/flexidumbell.webp",
     "amount": 560
   },
   {
     "name": "Flexi Bike",
-    "imgUrl": "http://localhost:3001/imgs/BikeMain_1260x.webp",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/BikeMain_1260x.webp",
     "amount": 960
   },
   {
     "name": "Flexi Kettle",
-    "imgUrl": "http://localhost:3001/imgs/flexiKettle.webp",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/flexiKettle.webp",
     "amount": 240
   },
   {
     "name": "Treadmill",
-    "imgUrl": "http://localhost:3001/imgs/flextread_img00_1260x.webp",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/flextread_img00_1260x.webp",
     "amount": 3000
   },
   {
     "name": "Gym Benches",
-    "imgUrl": "http://localhost:3001/imgs/gym-benches.png",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/gym-benches.png",
     "amount": 1200
   },
   {
     "name": "Smith and Squats",
-    "imgUrl": "http://localhost:3001/imgs/smith-squat.png",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/smith-squat.png",
     "amount": 1270
   },
   {
     "name": "Functional Trainer",
-    "imgUrl": "http://localhost:3001/imgs/functional-trainer.png",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/functional-trainer.png",
     "amount": 2300
   },
   {
     "name": "Hammer Series",
-    "imgUrl": "http://localhost:3001/imgs/hammer-series.png",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/hammer-series.png",
     "amount": 1500
   },
   {
     "name": "Strength Gym Equipment",
-    "imgUrl": "http://localhost:3001/imgs/strength-gym-equipment.png",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/strength-gym-equipment.png",
     "amount": 1270
   },
   {
     "name": "Gym Accessories",
-    "imgUrl": "http://localhost:3001/imgs/gym-accessories.png",
+    "imgUrl": "https://ecommerce-stripe-app-assets.netlify.app/imgs/gym-accessories.png",
     "amount": 250
   }
 ]
