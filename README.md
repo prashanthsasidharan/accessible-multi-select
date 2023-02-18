@@ -7,7 +7,13 @@ E-commerce app with the facility to make real-time payments via stripe integrati
 
 ## Demo
 
-Insert gif or link to demo
+Demo link - https://ecommerce-stripe-app.onrender.com/
+
+
+
+
+https://user-images.githubusercontent.com/64402931/219875696-3efbb593-da6c-4c3d-9eb9-ba4a5845d1fa.mov
+
 
 
 ## Note
