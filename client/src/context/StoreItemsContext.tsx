@@ -46,7 +46,7 @@ export function StoreItemsContext({children} : { children: ReactNode }) {
   }, [])
   return (
     isFetchingStoreItems ? (
-      <Spinner animation="border" role="status">
+      <Spinner animation="border" role="status" style={{marginLeft: '50%'}}>
         <span className="visually-hidden">Loading...</span>
       </Spinner>
     ) : (

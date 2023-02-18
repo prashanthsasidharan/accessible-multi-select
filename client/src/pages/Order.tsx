@@ -59,7 +59,7 @@ export function Order() {
                   {formatCurrency(item.amount)}
                 </div>
               </div>
-              <div className="col-md-5 text-end"> {formatCurrency(item.amount)}</div>
+              <div className="col-md-5 text-end"> {formatCurrency(item.amount * item.quantity)}</div>
             </Stack>
           ))}
         </Stack>

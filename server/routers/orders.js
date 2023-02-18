@@ -35,11 +35,10 @@ router.post("/", async (req, res) => {
       let { amount } = await Item.findOne({_id: item._id});
       totalAmount = totalAmount + amount * item.quantity;
     }
+    totalAmount = totalAmount * 100 // converting into cents as stripe takes amount in cents;
 
-  
-    console.log(totalAmount);
     const paymentIntent = await stripe.paymentIntents.create({
-      currency: "EUR",
+      currency: "USD",
       amount: totalAmount,
       automatic_payment_methods: { enabled: true },
     });
@@ -48,7 +47,7 @@ router.post("/", async (req, res) => {
       let { _id, quantity } = order || {};
       let { amount } = await Item.findOne({_id});
       let { email, name, shipping } = data || {};
-      console.log(email, name, shipping, _id, quantity, amount)
+
       await Order.create({
         itemId: _id,
         email,
@@ -99,7 +98,7 @@ router.get("/" ,async (req, res) => {
       name,
       email,
       date: (new Date(pI.created * 1000)).toLocaleString(),
-      total: pI.amount,
+      total: pI.amount/100,
       status: formatStatus(pI.status),
       formatted_status: formatStatusText(pI.status),
       items
